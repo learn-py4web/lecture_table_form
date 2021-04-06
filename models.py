@@ -3,7 +3,7 @@ This file defines the database models
 """
 
 import datetime
-from .common import db, Field, auth
+from .common import db, Field, auth, T
 from pydal.validators import *
 
 
@@ -13,6 +13,22 @@ def get_user_email():
 def get_time():
     return datetime.datetime.utcnow()
 
+db.define_table(
+    'product',
+    Field('product_name', requires=IS_NOT_EMPTY()),
+    Field('product_quantity', 'integer', default=0, requires=IS_INT_IN_RANGE(0, 1e6)),
+    Field('product_price', 'float', default=0., requires=IS_FLOAT_IN_RANGE(0, 1e6)),
+    Field('mail_order', 'boolean', default=True),
+    Field('created_by', default=get_user_email),
+    Field('creation_date', 'datetime', default=get_time),
+)
+
+db.product.id.readable = False
+db.product.created_by.readable = False
+db.product.creation_date.readable = False
+
+db.product.product_quantity.label = T('Quantity')
+db.product.product_price.label = T('Price')
 
 ### Define your table below
 #
