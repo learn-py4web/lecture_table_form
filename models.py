@@ -19,8 +19,8 @@ db.define_table(
     Field('product_quantity', 'integer', default=0, requires=IS_INT_IN_RANGE(0, 1e6)),
     Field('product_price', 'float', default=0., requires=IS_FLOAT_IN_RANGE(0, 1e6)),
     Field('mail_order', 'boolean', default=True),
-    Field('created_by', default=get_user_email()),
-    Field('creation_date', 'datetime', default=get_time()),
+    Field('created_by', default=get_user_email),
+    Field('creation_date', 'datetime', default=get_time),
 )
 
 db.product.id.readable = False
